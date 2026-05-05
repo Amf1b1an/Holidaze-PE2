@@ -1,9 +1,9 @@
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-const API_KEY = process.env.REACT_APP_API_KEY;
+const BASE_URL = import.meta.env.VITE_BASE_URL || "https://v2.api.noroff.dev";
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 const getHeaders = () => {
   const token = localStorage.getItem("token");
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     "Content-Type": "application/json",
     "X-Noroff-API-Key": API_KEY || "",
   };
@@ -32,6 +32,6 @@ export const apiRequest = async <T>(
 
   if (response.status === 204) return {} as T;
 
-  const data = await response.json();
-  return data.data;
+  const json = await response.json();
+  return json.data;
 };

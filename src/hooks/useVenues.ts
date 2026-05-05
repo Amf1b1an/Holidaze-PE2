@@ -1,5 +1,5 @@
 import { apiRequest } from "../utils/api";
-import { Venue } from "../types/index";
+import type { Venue } from "../types/index";
 
 export const fetchVenues = () => apiRequest<Venue[]>("/holidaze/venues");
 
