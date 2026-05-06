@@ -39,16 +39,16 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="mix-w-screen mx-auto px-4 py-12">
-      <header className="mb-12 mt-24 text-center flex gap-14 flex-row justify-between">
+    <div className="mix-w-screen px-28 md:px-15 py-12">
+      <header className="mb-12 mt-24 text-center flex gap-28 flex-row justify-between">
         <div className="flex flex-col justify-start">
           <Hamburger />
         </div>
         <div className="flex flex-col">
-          <h1 className="text-8xl font-semibold text-[#FFF04D] tracking-[6.40px] [text-shadow:_3px_5px_0px_rgb(0_0_0_/_0.25)] text-shadow:_ mb-4">
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-semibold text-[#FFF04D] tracking-[6.40px] md:[text-shadow:_3px_5px_0px_rgb(0_0_0_/_0.25)] [text-shadow:_2px_3px_0px_rgb(0_0_0_/_0.25)] text-shadow:_ mb-4">
             HOLIDAZE
           </h1>
-          <h2 className="text-[#FFF04D] text-4xl font-semibold tracking-[4px] [text-shadow:_2px_2px_0px_rgb(0_0_0_/_0.25)] text-shadow:_">
+          <h2 className="text-[#FFF04D] text-3xl md:text-4xl font-semibold tracking-[4px] [text-shadow:_2px_2px_0px_rgb(0_0_0_/_0.25)] text-shadow:_">
             BOOK YOUR <br></br> HOLIDAY NOW
           </h2>
         </div>
@@ -78,5 +78,4 @@ export default function Home() {
   );
 }
 
-/*As of now i've added the 12 newest venues to be shown on the front page. I've also began to change placeholder styling with correct styling accord to 
-the figma file since some of the js logic are working*/
+/*Worked on the responsiveness, namely padding and textsize as well as the shadowing on the text*/

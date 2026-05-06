@@ -2,6 +2,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { apiRequest } from "../utils/api";
 import { type Venue } from "../types";
+import Hamburger from "../components/Hamburger";
+import SideNav from "../components/SideNav";
 
 export default function VenueDetail() {
   const { id } = useParams<{ id: string }>();
@@ -49,12 +51,22 @@ export default function VenueDetail() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <button
-        onClick={() => navigate(-1)}
-        className="mb-6 flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors"
-      >
-        <span>←</span> Back to Explore
-      </button>
+      <header className="mb-12 mt-24 text-center flex gap-14 flex-row justify-between">
+        <div className="flex flex-col justify-start">
+          <Hamburger />
+        </div>
+        <div className="flex flex-col">
+          <h1 className="text-8xl font-semibold text-[#FFF04D] tracking-[6.40px] [text-shadow:_3px_5px_0px_rgb(0_0_0_/_0.25)] text-shadow:_ mb-4">
+            HOLIDAZE
+          </h1>
+          <h2 className="text-[#FFF04D] text-4xl font-semibold tracking-[4px] [text-shadow:_2px_2px_0px_rgb(0_0_0_/_0.25)] text-shadow:_">
+            {venue.name}
+          </h2>
+        </div>
+        <div>
+          <p>#</p>
+        </div>
+      </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2 space-y-8">
@@ -82,28 +94,28 @@ export default function VenueDetail() {
 
           <div className="border-t pt-8">
             <h2 className="text-2xl font-bold mb-4">What this place offers</h2>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 text-[#98E902]">
               <div
-                className={`flex items-center gap-3 ${!venue.meta.wifi && "text-gray-400 line-through"}`}
+                className={`flex items-center gap-3 ${!venue.meta.wifi && "text-[#FF544E]"}`}
               >
-                <span>#</span> {venue.meta.wifi ? "Fast Wifi" : "No Wifi"}
+                {venue.meta.wifi ? "Fast Wifi" : "No Wifi"}
               </div>
               <div
-                className={`flex items-center gap-3 ${!venue.meta.parking && "text-gray-400 line-through"}`}
+                className={`flex items-center gap-3 ${!venue.meta.parking && "text-[#FF544E]"}`}
               >
-                <span>#</span>{" "}
+                {" "}
                 {venue.meta.parking ? "Free Parking" : "No Parking"}
               </div>
               <div
-                className={`flex items-center gap-3 ${!venue.meta.breakfast && "text-gray-400 line-through"}`}
+                className={`flex items-center gap-3 ${!venue.meta.breakfast && "text-[#FF544E]"}`}
               >
-                <span>#</span>{" "}
+                {" "}
                 {venue.meta.breakfast ? "Breakfast Included" : "No Breakfast"}
               </div>
               <div
-                className={`flex items-center gap-3 ${!venue.meta.pets && "text-gray-400 line-through"}`}
+                className={`flex items-center gap-3  ${!venue.meta.pets && "text-[#FF544E]"}`}
               >
-                <span>#</span> {venue.meta.pets ? "Pets Allowed" : "No Pets"}
+                {venue.meta.pets ? "Pets Allowed" : "No Pets"}
               </div>
             </div>
           </div>
@@ -165,3 +177,13 @@ export default function VenueDetail() {
     </div>
   );
 }
+
+/* Will add calendar eventually function eventually. As of now, it is just all the data dumped into a placeholderbox, and iv'e tried to mold it into something. 
+To do:
+Remove the placeholderbox containing calender and other info and make it more like figma designed
+
+fix the fetching of media so that it allows more images
+
+Design
+
+make it more responsive on smaller screens*/
