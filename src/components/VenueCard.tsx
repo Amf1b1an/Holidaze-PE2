@@ -4,7 +4,7 @@ import { type Venue } from "../types";
 export const VenueCard = ({ venue }: { venue: Venue }) => {
   return (
     <Link to={`/venue/${venue.id}`} className="block group">
-      <div className="border-4 border-orange-600 overflow-hidden shadow-sm group-hover:shadow-lg transition-all bg-white h-full">
+      <div className="border-4 border-[#007878] overflow-hidden shadow-sm group-hover:shadow-lg transition-all bg-white rounded-lg h-full">
         <div className="relative overflow-hidden">
           {" "}
           <img

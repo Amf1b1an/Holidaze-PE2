@@ -45,10 +45,10 @@ export default function Home() {
           <Hamburger />
         </div>
         <div className="flex flex-col">
-          <h1 className="text-5xl font-semibold text-[#FFF04D] tracking-tighter mb-4">
+          <h1 className="text-8xl font-semibold text-[#FFF04D] tracking-[6.40px] [text-shadow:_3px_5px_0px_rgb(0_0_0_/_0.25)] text-shadow:_ mb-4">
             HOLIDAZE
           </h1>
-          <h2 className="text-[#FFF04D] text-4xl font-semibold tracking-[4px]">
+          <h2 className="text-[#FFF04D] text-4xl font-semibold tracking-[4px] [text-shadow:_2px_2px_0px_rgb(0_0_0_/_0.25)] text-shadow:_">
             BOOK YOUR <br></br> HOLIDAY NOW
           </h2>
         </div>

@@ -10,13 +10,13 @@ export default function Hamburger() {
       aria-label="Toggle Menu"
     >
       <span
-        className={`block w-8 h-1 bg-[#FFF04D] transition-transform duration-300 ${isOpen ? "rotate-45 translate-y-2.5" : ""}`}
+        className={`shadow-[_2px_2px_0px_rgb(0_0_0_/_0.25)] block w-8 h-1 bg-[#FFF04D] transition-transform duration-300 ${isOpen ? "shadow-[_0px_0px_0px_rgb(0_0_0_/_0.25)] rotate-45 translate-y-2.5" : ""}`}
       ></span>
       <span
-        className={`block w-8 h-1 bg-[#FFF04D] transition-opacity duration-300 ${isOpen ? "opacity-0" : ""}`}
+        className={`shadow-[_2px_2px_0px_rgb(0_0_0_/_0.25)] block w-8 h-1 bg-[#FFF04D] transition-opacity duration-300 ${isOpen ? "shadow-[_0px_0px_0px_rgb(0_0_0_/_0.25)] opacity-0" : ""}`}
       ></span>
       <span
-        className={`block w-8 h-1 bg-[#FFF04D] transition-transform duration-300 ${isOpen ? "-rotate-45 -translate-y-2.5" : ""}`}
+        className={`shadow-[_2px_2px_0px_rgb(0_0_0_/_0.25)] block w-8 h-1 bg-[#FFF04D] transition-transform duration-300 ${isOpen ? "shadow-[_0px_0px_0px_rgb(0_0_0_/_0.25)] -rotate-45 -translate-y-2.5" : ""}`}
       ></span>
     </button>
   );

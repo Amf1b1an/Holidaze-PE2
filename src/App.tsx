@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { MenuProvider } from "./context/MenuContext";
-import Home from "./pages/home";
+import Home from "./pages/Home";
 import SideNav from "./components/SideNav";
 
 function App() {
@@ -8,8 +8,7 @@ function App() {
     <Router>
       <MenuProvider>
         <SideNav />
-
-        <div className="min-h-screen w-full bg-gradient-to-b from-cyan-200 to-teal-700 flex flex-col items-center overflow-x-hidden">
+        <div className="min-h-screen w-full bg-gradient-to-b from-[#87FFFF] to-[#007878] flex flex-col items-center overflow-x-hidden">
           <Routes>
             <Route path="/" element={<Home />} />
           </Routes>

@@ -12,9 +12,9 @@ export default function SideNav() {
       />
 
       <nav
-        className={`fixed top-0 left-0 h-full max-w-96 bg-slate-900 z-40 transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 left-0 h-full max-w-96 bg-[#FFF04D] z-40 transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        <div className="pt-24 px-6 flex flex-col gap-6 text-[#FFF04D] text-xl font-semibold">
+        <div className="pt-24 px-6 flex flex-col gap-6 text-[#007878] text-xl font-semibold">
           <Link to="/" onClick={closeMenu}>
             Home
           </Link>
@@ -25,7 +25,7 @@ export default function SideNav() {
             My Bookings
           </Link>
           <hr className="border-slate-700" />
-          <button className="text-left text-red-400">Logout</button>
+          <button className="text-left text-[#FF544E]">Logout</button>
         </div>
       </nav>
     </>
