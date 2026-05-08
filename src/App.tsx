@@ -3,6 +3,7 @@ import { MenuProvider } from "./context/MenuContext";
 import Home from "./pages/Home";
 import SideNav from "./components/SideNav";
 import VenueDetail from "./pages/VenueDetails";
+import BottomNav from "./components/BottomNav";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/venue/:id" element={<VenueDetail />} />
           </Routes>
         </div>
+        <BottomNav />
       </MenuProvider>
     </Router>
   );
@@ -23,6 +25,6 @@ function App() {
 export default App;
 
 /* 
-added venue id routing
+added bottomnav
 
 */
