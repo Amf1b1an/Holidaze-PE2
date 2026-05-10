@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { apiRequest } from "../utils/api";
 import { type Venue } from "../types";
@@ -6,6 +6,7 @@ import Hamburger from "../components/Hamburger";
 import SideNav from "../components/SideNav";
 import { DayPicker, type DateRange } from "react-day-picker";
 import { format } from "date-fns";
+import { User } from "lucide-react";
 
 export default function VenueDetail() {
   const { id } = useParams<{ id: string }>();
@@ -14,6 +15,8 @@ export default function VenueDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>();
+  const token = localStorage.getItem("token");
+  const username = localStorage.getItem("name");
 
   useEffect(() => {
     const getVenue = async () => {
@@ -74,27 +77,44 @@ export default function VenueDetail() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 mb-20">
-      <header className="flex justify-center mb-12 mt-12 text-center w-full px-4">
-        <div className="flex justify-start items-center md:flex-1">
-          <div className="hidden md:block">
-            <Hamburger />
-          </div>
+      <header className="mb-12 mt-24 flex flex-row items-center justify-between w-full">
+        <div className="hidden md:flex justify-start md:flex-1">
+          <Hamburger />
         </div>
-        <div className="flex flex-col items-center text-center">
-          <h1 className="text-5xl sm:text-6xl lg:text-8xl font-semibold text-[#FFF04D] tracking-[2px] sm:tracking-[6.40px] [text-shadow:_3px_5px_0px_rgb(0_0_0_/_0.25)] mb-2">
+        <div className="flex flex-col text-center flex-grow">
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-semibold text-[#FFF04D] tracking-[6.40px] md:[text-shadow:_3px_5px_0px_rgb(0_0_0_/_0.25)] [text-shadow:_2px_3px_0px_rgb(0_0_0_/_0.25)] text-shadow:_ mb-4">
             HOLIDAZE
           </h1>
           <h2 className="text-[#FFF04D] text-3xl md:text-4xl font-semibold tracking-[4px] [text-shadow:_2px_2px_0px_rgb(0_0_0_/_0.25)] text-shadow:_">
-            {venue.name}
+            BOOK YOUR <br></br> HOLIDAY NOW
           </h2>
         </div>
-        <div className="hidden md:flex justify-end items-center md:flex-1">
-          <button
-            onClick={() => navigate("/profile")}
-            className="p-2 rounded-full border-2 border-[#FFF04D] text-[#FFF04D] hover:bg-[#FFF04D] hover:text-[#007878] transition-colors flex items-center"
-          >
-            #<span className="px-2 font-bold">PROFILE</span>
-          </button>
+        <div className="hidden md:flex items-center md:flex-1 justify-end">
+          {token ? (
+            <Link
+              to="/profile"
+              className="p-3 rounded-full border-2 border-[#FFF04D] text-[#FFF04D] hover:bg-[#FFF04D] hover:text-[#007878] transition-all flex items-center gap-2 group"
+              title={`Logged in as ${username}`}
+            >
+              <User size={24} />
+              <span className="hidden lg:block font-bold">MY PROFILE</span>
+            </Link>
+          ) : (
+            <div className="flex gap-4 flex-col">
+              <button
+                onClick={() => navigate("/login")}
+                className="px-4 py-2 text-[#FFF04D] font-bold border-b-2 border-transparent hover:border-[#FFF04D] transition-all"
+              >
+                LOGIN
+              </button>
+              <button
+                onClick={() => navigate("/register")}
+                className="px-6 py-2 bg-[#FFF04D] text-[#007878] font-bold rounded-full hover:bg-white transition-all shadow-md"
+              >
+                REGISTER
+              </button>
+            </div>
+          )}
         </div>
       </header>
 

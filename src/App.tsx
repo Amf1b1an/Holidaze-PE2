@@ -4,6 +4,9 @@ import Home from "./pages/Home";
 import SideNav from "./components/SideNav";
 import VenueDetail from "./pages/VenueDetails";
 import BottomNav from "./components/BottomNav";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/venue/:id" element={<VenueDetail />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
         <BottomNav />
@@ -25,6 +31,6 @@ function App() {
 export default App;
 
 /* 
-added bottomnav
+added register, login routing
 
 */
