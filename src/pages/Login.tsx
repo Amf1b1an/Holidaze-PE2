@@ -24,9 +24,10 @@ export default function Login() {
       const data = await loginUser({ email, password });
       localStorage.setItem("token", data.accessToken);
       localStorage.setItem("name", data.name);
-      localStorage.setItem("isManager", JSON.stringify(data.venueManager));
-      navigate("/");
+      const actualStatus = data.venueManager ?? false;
+      localStorage.setItem("isManager", JSON.stringify(actualStatus));
 
+      navigate("/");
       window.location.reload();
     } catch (err: any) {
       setError(err.message || "Invalid email or password");

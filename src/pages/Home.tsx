@@ -6,6 +6,7 @@ import { apiRequest } from "../utils/api";
 import { VenueCard } from "../components/VenueCard";
 import Hamburger from "../components/Hamburger";
 import SideNav from "../components/SideNav";
+import { getProfile } from "../api/profiles";
 
 export default function Home() {
   const [venues, setVenues] = useState<Venue[]>([]);
@@ -42,6 +43,27 @@ export default function Home() {
     }
     loadVenues();
   }, []);
+
+  useEffect(() => {
+    if (token && username) {
+      getProfile(username)
+        .then((data) => {
+          const rawValue = localStorage.getItem("isManager");
+          const localStatus =
+            rawValue && rawValue !== "undefined" ? JSON.parse(rawValue) : false;
+
+          if (data.venueManager !== localStatus) {
+            console.log("Background sync: Updating manager status...");
+            localStorage.setItem(
+              "isManager",
+              JSON.stringify(data.venueManager),
+            );
+            window.location.reload();
+          }
+        })
+        .catch((err) => console.error("Silent sync failed:", err));
+    }
+  }, [username, token]);
 
   return (
     <div className="mix-w-screen px-28 md:px-15 py-12">

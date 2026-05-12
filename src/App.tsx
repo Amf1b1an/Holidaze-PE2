@@ -7,6 +7,7 @@ import BottomNav from "./components/BottomNav";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import ApplyManager from "./pages/ApplyManager";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/apply-manager" element={<ApplyManager />} />
           </Routes>
         </div>
         <BottomNav />
@@ -31,6 +33,6 @@ function App() {
 export default App;
 
 /* 
-added register, login routing
+added register, login routing, ApplyManager
 
 */

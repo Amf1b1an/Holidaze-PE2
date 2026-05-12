@@ -94,6 +94,7 @@ export default function Register() {
                 type="checkbox"
                 id="manager"
                 className="w-4 h-4 accent-[#007878]"
+                checked={formData.venueManager}
                 onChange={(e) =>
                   setFormData({ ...formData, venueManager: e.target.checked })
                 }

@@ -8,16 +8,21 @@ export default function Profile() {
 
   useEffect(() => {
     if (username) {
-      console.log("Fetching profile for:", username);
-      console.log(
-        "Using Token:",
-        localStorage.getItem("token")?.substring(0, 10) + "...",
-      );
-
       getProfile(username)
-        .then(setProfile)
+        .then((data) => {
+          setProfile(data);
+          const rawValue = localStorage.getItem("isManager");
+          const localStatus =
+            rawValue && rawValue !== "undefined" ? JSON.parse(rawValue) : false;
+          if (data.venueManager !== localStatus) {
+            console.log("sync manager status with database");
+            localStorage.setItem(
+              "isManager",
+              JSON.stringify(data.venueManager),
+            );
+          }
+        })
         .catch((err) => {
-          console.error("Profile Fetch Error:", err);
           setError(err.message);
         });
     }
