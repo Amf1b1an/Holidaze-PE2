@@ -3,10 +3,12 @@ import { type Venue } from "../types";
 
 export const VenueCard = ({ venue }: { venue: Venue }) => {
   return (
-    <Link to={`/venue/${venue.id}`} className="block group">
-      <div className="border-4 border-[#007878] overflow-hidden shadow-sm group-hover:shadow-lg transition-all bg-white rounded-lg h-full">
+    <Link
+      to={`/venue/${venue.id}`}
+      className="block group w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]"
+    >
+      <div className="border-4 border-[#007878] overflow-hidden shadow-sm group-hover:shadow-lg transition-all bg-white rounded-lg h-full flex flex-col">
         <div className="relative overflow-hidden">
-          {" "}
           <img
             src={
               venue.media?.[0]?.url ||
@@ -22,15 +24,16 @@ export const VenueCard = ({ venue }: { venue: Venue }) => {
           )}
         </div>
 
-        <div className="p-4">
-          <h3 className="font-bold text-lg truncate text-gray-900 group-hover:text-blue-600 transition-colors">
-            {venue.name}
-          </h3>
-
-          <p className="text-gray-500 text-sm">
-            {venue.location?.city || "Remote"},{" "}
-            {venue.location?.country || "Unknown"}
-          </p>
+        <div className="p-4 flex-grow flex flex-col justify-between">
+          <div>
+            <h3 className="font-bold text-lg truncate text-gray-900 group-hover:text-[#007878] transition-colors">
+              {venue.name}
+            </h3>
+            <p className="text-gray-500 text-sm">
+              {venue.location?.city || "Remote"},{" "}
+              {venue.location?.country || "Unknown"}
+            </p>
+          </div>
 
           <div className="mt-4 flex justify-between items-center">
             <span className="font-bold text-lg text-gray-900">
