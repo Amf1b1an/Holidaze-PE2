@@ -1,12 +1,12 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { apiRequest } from "../utils/api";
 import { type Venue } from "../types";
-import Hamburger from "../components/Hamburger";
-import SideNav from "../components/SideNav";
+import Layout from "../components/Layout";
 import { DayPicker, type DateRange } from "react-day-picker";
 import { format } from "date-fns";
-import { User } from "lucide-react";
+import { createBooking } from "../api/bookings";
+import ImageProcessing from "../components/ImageProcessing";
 
 export default function VenueDetail() {
   const { id } = useParams<{ id: string }>();
@@ -15,8 +15,15 @@ export default function VenueDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>();
+  const [guestCount, setGuestCount] = useState(1);
+  const [isBooking, setIsBooking] = useState(false);
   const token = localStorage.getItem("token");
-  const username = localStorage.getItem("name");
+
+  const bookedRanges =
+    venue?.bookings?.map((booking: any) => ({
+      from: new Date(booking.dateFrom),
+      to: new Date(booking.dateTo),
+    })) || [];
 
   useEffect(() => {
     const getVenue = async () => {
@@ -32,28 +39,70 @@ export default function VenueDetail() {
         setLoading(false);
       }
     };
-
     if (id) getVenue();
   }, [id]);
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
-      </div>
+      <Layout>
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+        </div>
+      </Layout>
     );
   }
 
   if (error || !venue) {
     return (
-      <div className="max-w-4xl mx-auto mt-10 p-6 bg-red-50 text-red-700 rounded-lg text-center">
-        <p className="font-bold">Error: {error || "Venue not found"}</p>
-        <button onClick={() => navigate("/")} className="mt-4 underline">
-          Return Home
-        </button>
-      </div>
+      <Layout subtitle="Error">
+        <div className="max-w-4xl mx-auto mt-10 p-6 bg-red-50 text-red-700 rounded-lg text-center">
+          <p className="font-bold">Error: {error || "Venue not found"}</p>
+          <button onClick={() => navigate("/")} className="mt-4 underline">
+            Return Home
+          </button>
+        </div>
+      </Layout>
     );
   }
+
+  const handleBooking = async () => {
+    if (!token) {
+      alert("Please log in to book.");
+      return navigate("/login");
+    }
+
+    if (!selectedRange?.from || !selectedRange?.to) {
+      alert("Please select dates.");
+      return;
+    }
+
+    try {
+      setIsBooking(true);
+
+      const fromDate = new Date(selectedRange.from);
+      fromDate.setHours(12, 0, 0, 0);
+
+      const toDate = new Date(selectedRange.to);
+      toDate.setHours(12, 0, 0, 0);
+
+      const payload = {
+        dateFrom: fromDate.toISOString(),
+        dateTo: toDate.toISOString(),
+        guests: Number(guestCount),
+        venueId: venue.id,
+      };
+
+      await createBooking(payload);
+
+      alert("Booking successful!");
+      navigate("/profile");
+    } catch (err: any) {
+      console.error("Full API Validation Error Stack:", err);
+      alert(err.message || "Booking failed");
+    } finally {
+      setIsBooking(false);
+    }
+  };
 
   let footer = (
     <p className="mt-4 text-sm text-gray-500">Pick the first date.</p>
@@ -76,60 +125,28 @@ export default function VenueDetail() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 mb-20">
-      <header className="mb-12 mt-24 flex flex-row items-center justify-between w-full">
-        <div className="hidden md:flex justify-start md:flex-1">
-          <Hamburger />
-        </div>
-        <div className="flex flex-col text-center flex-grow">
-          <h1 className="text-4xl md:text-6xl lg:text-8xl font-semibold text-[#FFF04D] tracking-[6.40px] md:[text-shadow:_3px_5px_0px_rgb(0_0_0_/_0.25)] [text-shadow:_2px_3px_0px_rgb(0_0_0_/_0.25)] text-shadow:_ mb-4">
-            HOLIDAZE
-          </h1>
-          <h2 className="text-[#FFF04D] text-3xl md:text-4xl font-semibold tracking-[4px] [text-shadow:_2px_2px_0px_rgb(0_0_0_/_0.25)] text-shadow:_">
-            BOOK YOUR <br></br> HOLIDAY NOW
-          </h2>
-        </div>
-        <div className="hidden md:flex items-center md:flex-1 justify-end">
-          {token ? (
-            <Link
-              to="/profile"
-              className="p-3 rounded-full border-2 border-[#FFF04D] text-[#FFF04D] hover:bg-[#FFF04D] hover:text-[#007878] transition-all flex items-center gap-2 group"
-              title={`Logged in as ${username}`}
-            >
-              <User size={24} />
-              <span className="hidden lg:block font-bold">MY PROFILE</span>
-            </Link>
-          ) : (
-            <div className="flex gap-4 flex-col">
-              <button
-                onClick={() => navigate("/login")}
-                className="px-4 py-2 text-[#FFF04D] font-bold border-b-2 border-transparent hover:border-[#FFF04D] transition-all"
-              >
-                LOGIN
-              </button>
-              <button
-                onClick={() => navigate("/register")}
-                className="px-6 py-2 bg-[#FFF04D] text-[#007878] font-bold rounded-full hover:bg-white transition-all shadow-md"
-              >
-                REGISTER
-              </button>
-            </div>
-          )}
-        </div>
-      </header>
-
+    <Layout subtitle={venue.name}>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
-        <div className="lg:col-span-2 space-y-8">
-          <div className="rounded-2xl overflow-hidden shadow-lg bg-gray-200 aspect-video border-2 border-[#FF8800]">
-            <img
-              src={venue.media[0]?.url || "https://via.placeholder.com/800x450"}
-              alt={venue.media[0]?.alt || venue.name}
-              className="w-full h-full object-cover"
-            />
+        <div className="lg:col-span-2 space-y-4">
+          <ImageProcessing
+            src={venue.media[0]?.url}
+            alt={venue.name}
+            className="rounded-2xl aspect-video border-2 border-[#FF8800] shadow-2xl"
+          />
+
+          <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+            {venue.media.map((img, index) => (
+              <ImageProcessing
+                key={index}
+                src={img.url}
+                alt={`View ${index + 1}`}
+                className="w-32 h-24 flex-shrink-0 rounded-xl border-2 border-[#007878] hover:border-[#FF8800] cursor-pointer transition-colors"
+                filter="grayscale-[20%] hover:grayscale-0"
+              />
+            ))}
           </div>
 
           <div>
-            <h3 className="text-4xl font-extrabold"></h3>
             <p className="text-lg mt-2 text-[#FFF04D]">
               {venue.location.city}, {venue.location.country}
             </p>
@@ -157,17 +174,15 @@ export default function VenueDetail() {
               <div
                 className={`flex items-center gap-3 ${!venue.meta.parking && "text-[#FF544E]"}`}
               >
-                {" "}
                 {venue.meta.parking ? "Free Parking" : "No Parking"}
               </div>
               <div
                 className={`flex items-center gap-3 ${!venue.meta.breakfast && "text-[#FF544E]"}`}
               >
-                {" "}
                 {venue.meta.breakfast ? "Breakfast Included" : "No Breakfast"}
               </div>
               <div
-                className={`flex items-center gap-3  ${!venue.meta.pets && "text-[#FF544E]"}`}
+                className={`flex items-center gap-3 ${!venue.meta.pets && "text-[#FF544E]"}`}
               >
                 {venue.meta.pets ? "Pets Allowed" : "No Pets"}
               </div>
@@ -183,26 +198,36 @@ export default function VenueDetail() {
                 <span className="text-gray-500"> / night</span>
               </div>
               <div className="text-sm font-semibold">
-                {venue.rating || "New"}
+                {venue.rating ? `Rating: ${venue.rating}` : "New"}
               </div>
             </div>
 
             <div className="space-y-4 flex flex-col gap-10">
-              <div className="border-2 border-[#FF8800] rounded-lg p-3">
-                <label className="block text-[10px] font-bold uppercase text-gray-500">
+              <div className="border-2 border-[#FF8800] rounded-lg p-3 bg-white/30">
+                <label className="block text-[10px] font-bold uppercase text-gray-600">
                   Guests
                 </label>
-                <p>{venue.maxGuests} Guests Max</p>
+                <input
+                  type="number"
+                  min="1"
+                  max={venue.maxGuests}
+                  value={guestCount}
+                  onChange={(e) => setGuestCount(Number(e.target.value))}
+                  className="w-full bg-transparent font-bold text-lg outline-none"
+                />
+                <p className="text-[10px] text-gray-500">
+                  Max: {venue.maxGuests} guests
+                </p>
               </div>
 
-              <div className=" bg-gray-50 border-2 border-[#FF8800] rounded-lg overflow-x-auto flex flex-col items-center p-2 sm:p-4">
+              <div className="bg-gray-50 border-2 border-[#FF8800] rounded-lg overflow-x-auto flex flex-col items-center p-2 sm:p-4">
                 <DayPicker
                   mode="range"
                   selected={selectedRange}
                   onSelect={setSelectedRange}
                   fixedWeeks
                   footer={footer}
-                  disabled={{ before: new Date() }}
+                  disabled={[{ before: new Date() }, ...bookedRanges]}
                   classNames={{
                     caption_label: "text-lg font-bold text-[#007878]",
                     month_caption:
@@ -233,24 +258,35 @@ export default function VenueDetail() {
               </div>
 
               <button
-                className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-transform active:scale-[0.98]"
-                onClick={() => alert("Please log in to book!")}
+                className={`w-full py-4 rounded-xl font-bold text-lg transition-all active:scale-[0.98] ${
+                  isBooking
+                    ? "bg-gray-400"
+                    : "bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
+                }`}
+                onClick={handleBooking}
+                disabled={isBooking}
               >
-                Check Availability
+                {isBooking
+                  ? "Processing..."
+                  : token
+                    ? "Confirm Booking"
+                    : "Login to Book"}
               </button>
             </div>
 
-            <p className="text-center text-xs text-gray-500 mt-4">
-              You won't be charged yet
+            <p className="text-center text-xs text-gray-600 mt-4">
+              {token
+                ? "Your dates are held upon confirmation"
+                : "Sign in to complete reservation"}
             </p>
           </div>
 
           {venue.owner && (
             <div className="border rounded-2xl p-6 bg-[#FFC17A] flex items-center gap-4">
               <img
-                src={venue.owner.avatar.url}
+                src={venue.owner.avatar?.url || "https://placehold.co/100"}
                 alt={venue.owner.name}
-                className="w-12 h-12 rounded-full object-cover"
+                className="w-12 h-12 rounded-full object-cover border-2 border-[#007878]"
               />
               <div>
                 <p className="text-sm text-gray-500">Hosted by</p>
@@ -260,10 +296,9 @@ export default function VenueDetail() {
           )}
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }
-
 /* Added calendar component and designed it. 
 
 fix calendar responsiveness from 1025px -> 1153px

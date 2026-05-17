@@ -24,6 +24,7 @@ export default function Login() {
       const data = await loginUser({ email, password });
       localStorage.setItem("token", data.accessToken);
       localStorage.setItem("name", data.name);
+      localStorage.setItem("userName", data.name);
       const actualStatus = data.venueManager ?? false;
       localStorage.setItem("isManager", JSON.stringify(actualStatus));
 

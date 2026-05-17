@@ -33,7 +33,6 @@ export default function SideNav() {
           </Link>
 
           {!token ? (
-            /* user */
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-3">
                 <h3 className="text-xs tracking-widest opacity-70 uppercase">
@@ -70,7 +69,6 @@ export default function SideNav() {
               </div>
             </div>
           ) : (
-            /* logged in*/
             <>
               <div className="flex flex-col gap-3">
                 <h3 className="text-xs tracking-widest opacity-70">
@@ -84,7 +82,7 @@ export default function SideNav() {
                   PROFILE
                 </Link>
                 <Link
-                  to="/bookings"
+                  to="/my-bookings"
                   onClick={closeMenu}
                   className="hover:translate-x-2 transition-transform"
                 >

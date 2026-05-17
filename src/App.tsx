@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import ApplyManager from "./pages/ApplyManager";
+import MyBookings from "./pages/MyBookings";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/apply-manager" element={<ApplyManager />} />
+            <Route path="/my-bookings" element={<MyBookings />} />
           </Routes>
         </div>
         <BottomNav />
@@ -33,6 +35,6 @@ function App() {
 export default App;
 
 /* 
-added register, login routing, ApplyManager
+added register, login routing, ApplyManager, my-bookings
 
 */

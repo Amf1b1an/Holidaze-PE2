@@ -3,7 +3,7 @@ import type { Venue } from "../types";
 import { apiRequest } from "../utils/api";
 import { VenueCard } from "../components/VenueCard";
 import { getProfile } from "../api/profiles";
-import Layout from "../components/layout";
+import Layout from "../components/Layout";
 
 export default function Home() {
   const [venues, setVenues] = useState<Venue[]>([]);

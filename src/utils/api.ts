@@ -16,9 +16,10 @@ const getHeaders = () => {
 
 export const apiRequest = async <T>(
   endpoint: string,
-  method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
-  body?: any,
+  options: { method?: "GET" | "POST" | "PUT" | "DELETE"; body?: any } = {},
 ): Promise<T> => {
+  const { method = "GET", body } = options;
+
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     method,
     headers: getHeaders(),

@@ -17,7 +17,10 @@ export interface RegisterData {
 }
 
 export const registerUser = async (data: RegisterData) => {
-  return await apiRequest<any>("/auth/register", "POST", data);
+  return await apiRequest<any>("/auth/register", {
+    method: "POST",
+    body: data,
+  });
 };
 
 export const loginUser = async (loginData: any) => {
@@ -27,6 +30,9 @@ export const loginUser = async (loginData: any) => {
     venueManager: boolean;
     email: string;
     avatar?: { url: string; alt: string };
-  }>("/auth/login", "POST", loginData);
+  }>("/auth/login", {
+    method: "POST",
+    body: loginData,
+  });
   return response;
 };

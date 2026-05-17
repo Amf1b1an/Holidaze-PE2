@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getProfile } from "../api/profiles";
-import Layout from "../components/layout";
+import Layout from "../components/Layout";
 import { Mail, ShieldCheck } from "lucide-react";
 
 export default function Profile() {
