@@ -143,7 +143,7 @@ export default function Profile() {
                   </p>
                 </div>
                 <button
-                  onClick={() => navigate("/venue-bookings")}
+                  onClick={() => navigate("/booking-overview")}
                   className="mt-4 w-full py-3 bg-[#007878] text-[#FFF04D] font-black rounded-xl text-sm flex items-center justify-center gap-2 shadow hover:bg-[#005a5a] transition-all"
                 >
                   <LayoutDashboard size={18} /> BOOKING OVERVIEW

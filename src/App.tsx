@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import ApplyManager from "./pages/ApplyManager";
 import MyBookings from "./pages/MyBookings";
 import BrowseVenues from "./pages/BrowseVenues";
+import CreateVenue from "./pages/CreateVenue";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/apply-manager" element={<ApplyManager />} />
             <Route path="/my-bookings" element={<MyBookings />} />
             <Route path="/browse-venues" element={<BrowseVenues />} />
+            <Route path="/create-venue" element={<CreateVenue />} />
           </Routes>
         </div>
         <BottomNav />
