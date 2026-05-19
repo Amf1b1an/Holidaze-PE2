@@ -6,10 +6,12 @@ export default function SideNav() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const storedManager = localStorage.getItem("isManager");
+
   const isManager =
     storedManager && storedManager !== "undefined"
       ? JSON.parse(storedManager)
       : false;
+
   const handleLogout = () => {
     localStorage.clear();
     closeMenu();
@@ -20,15 +22,23 @@ export default function SideNav() {
   return (
     <>
       <div
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 bg-black/50 z-40 transition-all duration-300 ease-in-out ${
+          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
         onClick={closeMenu}
       />
 
       <nav
-        className={`fixed top-0 left-0 h-full w-[80vw] md:w-[450px] bg-[#FFF04D] z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 left-0 h-full w-[80vw] md:w-[450px] bg-[#FFF04D] z-50 shadow-2xl transition-transform duration-300 ease-in-out transform ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
-        <div className="pt-24 px-10 flex flex-col text-[#007878] text-xl font-semibold gap-8">
-          <Link to="/" onClick={closeMenu} className="text-3xl font-bold mb-4">
+        <div className="pt-24 px-10 flex flex-col text-[#007878] text-xl font-semibold gap-8 h-full overflow-y-auto">
+          <Link
+            to="/"
+            onClick={closeMenu}
+            className="text-3xl font-bold mb-4 inline-block"
+          >
             HOME
           </Link>
 
@@ -93,7 +103,7 @@ export default function SideNav() {
               <div className="flex flex-col gap-3">
                 <h3 className="text-xs tracking-widest opacity-70">VENUES</h3>
                 <Link
-                  to="/"
+                  to="/browse-venues"
                   onClick={closeMenu}
                   className="hover:translate-x-2 transition-transform"
                 >
@@ -152,7 +162,7 @@ export default function SideNav() {
 
               <button
                 onClick={handleLogout}
-                className="text-left text-[#FF544E] font-bold hover:scale-105 transition-transform"
+                className="text-left text-[#FF544E] font-bold hover:translate-x-2 transition-transform pb-8"
               >
                 LOGOUT
               </button>

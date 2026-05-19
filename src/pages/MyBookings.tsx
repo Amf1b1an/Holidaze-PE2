@@ -73,8 +73,8 @@ export default function MyBookings() {
               You haven't booked any trips yet!
             </p>
             <button
-              onClick={() => navigate("/")}
-              className="px-6 py-3 bg-blue-600 text-white font-bold rounded-xl shadow-md hover:bg-blue-700 transition"
+              onClick={() => navigate("/browse-venues")}
+              className="bg-[#007878] text-[#FFF04D] py-2 px-4 rounded-lg mt-2 text-center hover:bg-[#005a5a] transition-all"
             >
               Explore Venues
             </button>

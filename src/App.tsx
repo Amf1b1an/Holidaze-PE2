@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import ApplyManager from "./pages/ApplyManager";
 import MyBookings from "./pages/MyBookings";
+import BrowseVenues from "./pages/BrowseVenues";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/apply-manager" element={<ApplyManager />} />
             <Route path="/my-bookings" element={<MyBookings />} />
+            <Route path="/browse-venues" element={<BrowseVenues />} />
           </Routes>
         </div>
         <BottomNav />

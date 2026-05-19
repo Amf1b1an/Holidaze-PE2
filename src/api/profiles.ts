@@ -13,3 +13,19 @@ export async function updateVenueManagerStatus(
     body: { venueManager: status },
   });
 }
+
+export async function updateProfile(
+  username: string,
+  data: { avatarUrl: string; bio: string },
+) {
+  return await apiRequest<any>(`/holidaze/profiles/${username}`, {
+    method: "PUT",
+    body: {
+      bio: data.bio,
+      avatar: {
+        url: data.avatarUrl,
+        alt: `${username}'s profile avatar`,
+      },
+    },
+  });
+}
